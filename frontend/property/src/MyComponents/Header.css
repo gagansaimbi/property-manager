@@ -1,0 +1,14 @@
+.parentContainer{
+    background-color: darkgoldenrod;
+    height:50px;
+    width:'100%';
+    justify-content: center;
+    align-items: center;
+}
+.headerContainer{
+    display: flex;
+}
+.headerText{
+    color: white;
+    margin-left: 20px;
+}

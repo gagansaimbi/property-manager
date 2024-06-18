@@ -1,0 +1,38 @@
+[
+    {
+        "shopDetails":"Shop 1 A, First Floor",
+        "leaseAmount":"200000",
+        "Status":"Occupied",
+        "TenantName":"tenant one",
+        "TenantMobile":7717785507,
+        "StartDate":"27-09-23",
+        "EndDate":"27-09-24"
+    },
+    {
+        "shopDetails":"Shop 1 A, First Floor",
+        "leaseAmount":"200000",
+        "Status":"Occupied",
+        "TenantName":"tenant two",
+        "TenantMobile":7717785507,
+        "StartDate":"27-09-23",
+        "EndDate":"27-09-24"
+    },
+    {
+        "shopDetails":"Shop 1 B, Second Floor",
+        "leaseAmount":"400000",
+        "status":"Occupied",
+        "tenantName":"tenant three",
+        "tenantMobile":9537785507,
+        "startDate":"27-09-23",
+        "endDate":"27-09-24"
+    },
+    {
+        "shopDetails":"Shop 2 C, Third Floor",
+        "leaseAmount":"500000",
+        "status":"Unoccupied",
+        "tenantName":"tenant four",
+        "tenantMobile":8817785507,
+        "startDate":"27-09-23",
+        "endDate":"27-09-24"
+    }
+]

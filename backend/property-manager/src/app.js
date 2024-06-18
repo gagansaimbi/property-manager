@@ -5,6 +5,8 @@ const propertyRoutes = require('./routes/properties');
 
 const app = express();
 const port = process.env.PORT || 3000;
+var cors = require('cors');
+app.use(cors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/property-manager')
     .then(() => {
