@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 const ShopList = () => {
-    const [details, setDetails] = useState([]);
+    // const [details, setDetails] = useState([]);
     const [name, setName] = useState();
     const [records, setRecords] = useState([])
     useEffect(() => {
@@ -12,9 +12,9 @@ const ShopList = () => {
     }, []);
 
     async function getData(){
-        const response = await axios.get('http://localhost:3000/properties')
+        const response = await axios.get('http://localhost:8000/properties')
         console.log(response.data)
-        setDetails(response.data);
+        // setDetails(response.data);
         setRecords(response.data);
     }
 
@@ -22,12 +22,12 @@ const ShopList = () => {
         const val = e.target.name;
         if (val === "ascending") {
             // const sorted = [...details].sort((a, b) => a.leaseAmount - b.leaseAmount);
-            const response = await axios.get(`http://localhost:3000/properties?leaseAmount=asc${name && name!=='' ? `&tenantName=${name}`:``}`)
+            const response = await axios.get(`http://localhost:8000/properties?leaseAmount=asc${name && name!=='' ? `&tenantName=${name}`:``}`)
             console.log("sorted", response.data);
             setRecords(response.data)
         }
         if (val === "descending") {
-            const response = await axios.get(`http://localhost:3000/properties?leaseAmount=desc${name && name!=='' ? `&tenantName=${name}`:``}`)
+            const response = await axios.get(`http://localhost:8000/properties?leaseAmount=desc${name && name!=='' ? `&tenantName=${name}`:``}`)
             // const sorted = [...details].sort((a, b) => b.leaseAmount - a.leaseAmount);
             console.log("sorted", response.data);
             setRecords(response.data)
@@ -36,7 +36,7 @@ const ShopList = () => {
     const filter = async (event) => {
         if (event.key === "Enter"){
             // setRecords(details.filter(f => f.tenantName.toLowerCase().includes(event.target.value)))
-        const response = await axios.get(`http://localhost:3000/properties?tenantName=${event.target.value}`)
+        const response = await axios.get(`http://localhost:8000/properties?tenantName=${event.target.value}`)
         setRecords(response.data)
         }
 
@@ -45,7 +45,8 @@ const ShopList = () => {
         <div>
             <table>
                 <tr>
-                    <th>Shop Details</th>
+                    <th>Shop No</th>
+                    <th>Floor No</th>
                     <th>
                         Lease Amount{" "}
                         <button name="ascending" onClick={(e) => handleSort(e)}>
@@ -66,9 +67,10 @@ const ShopList = () => {
                 </tr>
                 {records.map((data) => (
                     <tr>
-                        <td>{data.shopDetails}</td>
+                        <td>{data.shopNo}</td>
+                        <td>{data.floorNo}</td>
                         <td>{data.leaseAmount}</td>
-                        <td>{data.status}</td>
+                        <td>{data.occupied === true ? 'Occupied' : 'Un Occupied'}</td>
                         <td>{data.tenantName}</td>
                         <td>{data.tenantMobile}</td>
                         <td>{data.startDate}</td>
@@ -79,4 +81,4 @@ const ShopList = () => {
         </div>
     );
 };
-export default ShopList;
+export default ShopList

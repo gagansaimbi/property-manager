@@ -21,9 +21,9 @@ router.post('/properties', async (req, res) => {
 
         // Save property to the database
         await property.save();
-        res.status(201).send(property);
+        res.status(201).json({ message: 'Shop added' });
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).json({ message: 'error' });
     }
 });
 
@@ -38,7 +38,7 @@ router.get('/properties', async (req, res) => {
     }
 
     if (occupied !== undefined) {
-        filter.occupied = occupied === 'true';
+        filter.occupied = occupied;
     }
 
     if (leaseAmount) {
@@ -61,6 +61,35 @@ router.get('/properties/:id', async (req, res) => {
             return res.status(404).send();
         }
         res.status(200).send(property);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+router.patch('/properties/:id', async (req, res) => {
+    try {
+        const currentPropertyValues = await Property.findById(req.params.id);
+        if(currentPropertyValues.occupied){
+            res.status(404).json({"type":"forbidden", "message":"occupied is already true"});
+        } else {
+        const id = req.params.id;
+        const currentDate = new Date().toJSON().substring(0,10).split('-');
+        const startDate = currentDate[2] + '-' + currentDate[1] + '-' + currentDate[0];
+        const endDate = currentDate[2] + '-' + currentDate[1] + '-' + (Number(currentDate[0])+Number(req.body.leaseDuration)).toString();
+
+        const property = await Property.findByIdAndUpdate(id, { tenantName: req.body.tenantName, 
+            tenantMobile: req.body.tenantMobile, 
+            leaseDuration: req.body.leaseDuration ,
+            leaseStartDate: startDate,
+            leaseEndDate: endDate,
+            leaseAmount: currentPropertyValues.leaseAmount * req.body.leaseDuration,
+            occupied: true
+    });
+        if (!property) {
+            return res.status(404).json({"type":"Bad request"});
+        }
+        res.status(200).json({"type": "OK", "message":"Update succesfull"});
+    }
     } catch (e) {
         res.status(500).send(e);
     }
